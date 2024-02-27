@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - vFlow</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+            <div class="container-fluid">
+                <img src="https://media.licdn.com/dms/image/C4D0BAQFJBjv28Jy12w/company-logo_200_200/0/1663441119923/veersa_logo?e=2147483647&v=beta&t=C-YgWyecBuBhMz45fPFNb5qpZrVhrgfZqrxjYCRPHC0" style="height:5vh; width:5vh">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> &nbsp; vFlow</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fa-solid fa-house"></i> Home
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Index">Feed</a>
+                        </li>
+
+                    </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form class="d-flex my-2 my-lg-0" asp-action="" asp-controller="Search" method="get">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchString">
+                            <select class="form-select me-2" name="searchType">
+                                <option value="Post">Search by Post</option>
+                                <option value="Tag">Search by Tag</option>
+                            </select>
+                            <button class="btn btn-dark" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </form>
+                    }
+
+
+                    <partial name="_LoginPartial" />
+
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://kit.fontawesome.com/1cdfaf5f64.js" crossorigin="anonymous"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

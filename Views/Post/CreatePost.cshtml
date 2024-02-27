@@ -1,0 +1,238 @@
+﻿@model Post
+
+
+<style>
+
+    .tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .tag {
+        background-color: #f0f0f0;
+        color: #333;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+        .tag button {
+            margin-left: 5px;
+            border: none;
+            background: none;
+            color: #555;
+            cursor: pointer;
+        }
+
+            .tag button:hover {
+                color: #333;
+            }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    #tagsInput {
+        margin-top: 10px;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    #addTagBtn {
+        margin-top: 10px;
+        padding: 8px 20px;
+        font-size: 14px;
+        background-color: #444444;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        #addTagBtn:hover {
+            background-color: #000000;
+        }
+
+    .btn-primary {
+        margin-top: 10px;
+        padding: 8px 20px;
+        font-size: 14px;
+        background-color: #0096FF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+</style>
+
+
+
+<form asp-controller="Post" asp-action="CreatePost" method="post">
+
+    <legend class="text-dark py-2">@(Model.Id != 0 ? "Update" : "Create") Post</legend>
+
+    <div class="form-group">
+
+        <label for="title">Title:</label>
+
+        <input asp-for="Title" type="text" class="form-control" id="title" name="Title" required />
+
+    </div>
+
+    <div class="form-group">
+
+        <label for="body">Body:</label>
+
+        <input asp-for="Body" class="form-control" id="body" name="Body" rows="4" required></input>
+
+    </div>
+
+    <div class="form-group">
+
+        <label for="tags">Tags:</label>
+
+        <div id="tagsDisplayContainer" class="tags-container">
+
+            @if (Model.Tags != null)
+
+            {
+
+                foreach (var tag in Model.Tags)
+
+                {
+
+                    <span class="tag">@tag <button type="button" class="remove-tag-btn" data-tag="@tag">×</button></span>
+
+                }
+
+            }
+
+        </div>
+
+        <input id="tagsInput" type="text" class="form-control" />
+
+        <input id="allTags" name="allTags" hidden />
+
+        <input id="RemoveTags" name="RemoveTags" hidden />
+
+    </div>
+
+    <button type="button" class="btn btn-primary" id="addTagBtn">Add Tag</button>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+
+
+
+@section scripts {
+
+    <script>
+
+        document.getElementById('addTagBtn').addEventListener('click', function () {
+
+            var tagInput = document.getElementById('tagsInput');
+
+            var tagText = tagInput.value.trim();
+
+            if (tagText !== '') {
+
+                var tagsDisplayContainer = document.getElementById('tagsDisplayContainer');
+
+                var tagSpan = document.createElement('span');
+
+                tagSpan.className = 'tag';
+
+                tagSpan.innerHTML = tagText + ' <button type="button" class="remove-tag-btn" data-tag="' + tagText + '">×</button>';
+
+                tagsDisplayContainer.appendChild(tagSpan);
+
+                tagInput.value = '';
+
+                addToAllTags(tagText);
+
+            }
+
+        });
+
+        document.getElementById('tagsDisplayContainer').addEventListener('click', function (e) {
+
+            if (e.target.classList.contains('remove-tag-btn')) {
+
+                var tagToRemove = e.target.dataset.tag;
+
+                e.target.parentNode.remove();
+
+                addToRemoveTags(tagToRemove);
+
+                removeFromAllTags(tagToRemove);
+
+            }
+
+        });
+
+        function addToAllTags(tagToAdd) {
+
+            var allTagsInput = document.getElementById('allTags');
+
+            if (allTagsInput.value.length > 0) {
+
+                allTagsInput.value += ' ';
+
+            }
+
+            allTagsInput.value += tagToAdd;
+
+        }
+
+        function addToRemoveTags(tagToRemove) {
+
+            var removeTagsInput = document.getElementById('RemoveTags');
+
+            if (removeTagsInput.value.length > 0) {
+
+                removeTagsInput.value += ' ';
+
+            }
+
+            removeTagsInput.value += tagToRemove;
+
+        }
+
+        function removeFromAllTags(tagToRemove) {
+
+            var allTagsInput = document.getElementById('allTags');
+
+            var tags = allTagsInput.value.split(' ');
+
+            var index = tags.indexOf(tagToRemove);
+
+            if (index !== -1) {
+
+                tags.splice(index, 1);
+
+                allTagsInput.value = tags.join(' ');
+
+            }
+
+        }
+
+    </script>
+
+}

@@ -1,0 +1,108 @@
+﻿@model QuesAns
+
+<style>
+    body {
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
+        a:hover {
+            color: black;
+        }
+
+    h1 {
+        color: #696969;
+        margin: 10px;
+        display: flex;
+    }
+
+    .post {
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+
+    .post-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .post-body {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 10px;
+    }
+
+    .post-timestamp {
+        padding: 5px;
+        font-size: 12px;
+        color: #666;
+        text-align: right;
+    }
+
+    .answer {
+        margin-left: 20px;
+        padding-left: 10px;
+        border-left: 1px solid #ccc;
+    }
+
+    .tag {
+        display: inline-block;
+        color: #333;
+        margin: 10px;
+        border-radius: 2px;
+    }
+</style>
+
+<h1>
+    <i class="fa-solid fa-quote-left"></i><strong> Posts</strong>
+    <form asp-controller="Post" asp-action="CreatePost" method="get">
+        <button type="submit" class="btn btn-success" style="margin-left:52rem;border-radius:3px"><i class="fa-regular fa-plus"></i> Create Post</button>
+    </form>
+</h1>
+
+@foreach (var post in Model.posts)
+{
+    <div class="card border-primary mb-2" style="max-width: 70rem;border-radius:2px">
+        <h3 class="card-header" style="background-color: #696969"><a asp-controller="Post" asp-action="AnsPost" asp-route-id="@post.Id"> <i class="fa-regular fa-q"></i> @post.Title</a></h3>
+        <p class="card-body"><i class="fa-solid fa-person-circle-question"></i> @post.Body</p>
+        <p class="post-timestamp">Posted on: @post.TimeStamp.ToString("yyyy-MM-dd HH:mm:ss") by @Model.AppUsers.FirstOrDefault(u => u.Id == post.AppUserId).UserName</p>
+        <p></p>
+        <div class="answer">
+
+            @{
+                byte counter = 0;
+            }
+            @foreach (var answer in Model.Answers)
+            {
+                if (answer.PostId == post.Id)
+                {
+                    <div class="card px-3 mx-5 my-2">
+                        <p> <i class="fa-regular fa-message"></i> @answer.Body</p>
+                        <p class="post-timestamp">
+                            Answered on: @answer.TimeStamp.ToString("yyyy-MM-dd HH:mm:ss") by @Model.AppUsers.FirstOrDefault(u => u.Id == answer.AppUserId).UserName
+                        </p>
+                    </div>
+
+                    counter++;
+                    if (counter >= 2)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            @if (post.Tags != null)
+            {
+                @foreach (var tag in post.Tags)
+                {
+                    <span class="badge rounded-pill bg-info mx-2 my-4">@tag</span>
+                }
+            }
+        </div>
+    </div>
+}
