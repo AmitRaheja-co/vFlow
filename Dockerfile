@@ -16,13 +16,11 @@ RUN dotnet tool install --global dotnet-ef
 # Add dotnet tools to PATH
 ENV PATH="$PATH:/root/.dotnet/tools"
 
-
 # Copy the rest of the application code
 COPY . ./
 
 # Make the entrypoint scripts executable
 RUN chmod +x ./.entrypoint/entrypoint.sh ./.entrypoint/wait-for-it.sh
-
 
 # Expose the application port
 EXPOSE 5000
