@@ -8902,26 +8902,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\amitr\\.nuget\\packages\\": {}
+    "/root/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\amitr\\OneDrive\\Desktop\\MVC\\vFlow\\vFlow.csproj",
+      "projectUniqueName": "/app/vFlow.csproj",
       "projectName": "vFlow",
-      "projectPath": "C:\\Users\\amitr\\OneDrive\\Desktop\\MVC\\vFlow\\vFlow.csproj",
-      "packagesPath": "C:\\Users\\amitr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\amitr\\OneDrive\\Desktop\\MVC\\vFlow\\obj\\",
+      "projectPath": "/app/vFlow.csproj",
+      "packagesPath": "/root/.nuget/packages/",
+      "outputPath": "/app/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\amitr\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/root/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -8934,6 +8932,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -8994,7 +8997,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
